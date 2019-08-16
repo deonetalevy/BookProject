@@ -40,7 +40,7 @@ namespace BookWebApp
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage(); //Adds feedback page when something goes wrong in app
             }
             else
             {
@@ -50,8 +50,9 @@ namespace BookWebApp
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(); 
             app.UseCookiePolicy();
+            app.UseStatusCodePages(); //Will show status information if returned
 
             app.UseMvc(routes =>
             {
