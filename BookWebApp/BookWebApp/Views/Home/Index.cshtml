@@ -1,8 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Book App Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model BookWebApp.ViewModels.HomeViewModel //Specify the model for this view
+
+    
+        <h2>@Model.Title</h2>
+    
+    
+        @foreach (var book in Model.Books)
+        {
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div>
+                    <h2>@book.BookName</h2>
+                    <h3 class="input-group-prepend">@book.Price.ToString("c")</h3>
+                    <h3>@book.AuthorName</h3>
+                    <h3>@book.Date</h3>
+                </div>
+            </div>
+        }
+    
+

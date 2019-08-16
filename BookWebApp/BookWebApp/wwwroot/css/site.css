@@ -44,6 +44,8 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-image: url('/Images/background.png');
+  background-repeat: repeat;
 }
 .footer {
   position: absolute;
