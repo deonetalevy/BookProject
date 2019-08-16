@@ -10,14 +10,14 @@
     
         @foreach (var book in Model.Books)
         {
-            <div class="col-sm-4 col-lg-4 col-md-4">
+            
                 <div>
                     <h2>@book.BookName</h2>
                     <h3 class="input-group-prepend">@book.Price.ToString("c")</h3>
                     <h3>@book.AuthorName</h3>
                     <h3>@book.Date</h3>
                 </div>
-            </div>
+            
         }
     
 

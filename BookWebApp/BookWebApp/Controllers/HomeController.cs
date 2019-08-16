@@ -11,26 +11,26 @@ namespace BookWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IBookRepository bookRepository;
+        private readonly IBookRepository _bookRepository;
 
         //Constructor to intialize IBookRepository Interface. Automatically returns MockBook Repository using dependency injection
         //because of transient service in startup class.
         public HomeController(IBookRepository bookRepository)
         {
-            this.bookRepository = bookRepository; //Local repository is equal to repository passed into the constructor
+            _bookRepository = bookRepository; //Local repository is equal to repository passed into the constructor
         }
         public IActionResult Index()
         {
             
-            var books = bookRepository.GetAllBooks().OrderBy(b => b.BookName);
+            var books = _bookRepository.GetAllBooks().OrderBy(b => b.BookName);
 
-            var HomeViewModel = new HomeViewModel()
+            var homeViewModel = new HomeViewModel()
             {
                 Title = "Welcome to the Book Web App",
                 Books = books.ToList()
             };
 
-            return View(HomeViewModel);
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()
