@@ -51,7 +51,7 @@ namespace BookWebApp.Controllers
                 var result = _bookRepository.AddBook(model.Book);
 
                 if (result == true) {
-                                    
+
                     return RedirectToAction("RecordAdded");
                 }
                 else {
@@ -95,16 +95,45 @@ namespace BookWebApp.Controllers
             //Get Book with matching Id
             var book = _bookRepository.GetAllBooks().ToList().Where(s => s.Id == id).FirstOrDefault();
 
+            //Redirect to index page if book isn't found
             if (book == null)
             {
                 return RedirectToAction("Index");
             }
-            return View(book);
-            
+            //Return book object to view if it is found in table
+            HomeViewModel _HomeViewModel = new HomeViewModel
+            {
+                Book = book
+
+            };
+            return View(_HomeViewModel);
+
 
         }
         //POST: Books/Edit
+        [HttpPost]
+        public IActionResult EditBook(Book book)
+        {
+            //[Bind(include: "Id,BookName,AuthorName,Price,Publisher,Date")] 
+            //Only update record if data is valid
+            if (ModelState.IsValid)
+            {
+                //Perform method to add book to database then redirect to Record Added action method
+                var result = _bookRepository.UpdateBook(book);
 
+                if (result == true)
+                {
+
+                    return RedirectToAction("RecordAdded");
+                }
+                else
+                {
+                    return RedirectToAction("AddFail");
+                }
+
+            }
+            return View(book);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookWebApp.Models
 {
@@ -51,6 +52,24 @@ namespace BookWebApp.Models
 
                 return true;    
             }
+        }
+
+        //Method to Update Book Record in database
+        public Boolean UpdateBook(Book book)
+        {
+
+            //Add record to table and return true if no duplicate records are found
+            //book.Date = DateTime.Now;
+            if (book != null)
+            {
+                book.Date = DateTime.Now;
+                _appDbContext.Entry(book).State = EntityState.Modified;
+                _appDbContext.SaveChanges();
+
+                return true;
+            }
+            return false;
+            
         }
     }
 }

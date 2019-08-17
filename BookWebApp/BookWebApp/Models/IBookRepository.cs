@@ -13,5 +13,8 @@ namespace BookWebApp.Models
         //Method to add book to database
         Boolean AddBook(Book book);
 
+        //Method to update book record in database
+        Boolean UpdateBook(Book book);
+
     }
 }
