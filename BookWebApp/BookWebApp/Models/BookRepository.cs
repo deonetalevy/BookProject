@@ -26,5 +26,12 @@ namespace BookWebApp.Models
         {
             return _appDbContext.Books.FirstOrDefault(b => b.Id == bookId);
         }
+
+        //Method to Add Book to database
+        public void AddBook(Book book)
+        {
+            _appDbContext.Books.Add(book);
+            _appDbContext.SaveChanges();
+        }
     }
 }

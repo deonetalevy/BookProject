@@ -37,6 +37,7 @@ namespace BookWebApp
             //Initialize DbContext service and specify server through Connection string retrieved from the Configuration structure.
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //Will inherently use an IBookRepository object as the constructor argument whenever a BookRepository object is created
             services.AddTransient<IBookRepository, BookRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

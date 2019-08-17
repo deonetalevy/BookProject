@@ -14,6 +14,7 @@ namespace BookWebApp.Models
         {
             if (!context.Books.Any()) //If db table is empty, initialize values
             {
+                /*
                 context.AddRange
                     (
                            new Book { BookName = "Charlotte's Web", Price = 2.99, AuthorName = "E.B. White", Date = DateTime.Now, Publisher = "Harper Collins" },
@@ -22,7 +23,7 @@ namespace BookWebApp.Models
                            new Book { BookName = "Charl", Price = 2.99, AuthorName = "E.B. White", Date = DateTime.Now, Publisher = "Harper" },
                            new Book { BookName = "Charlo", Price = 2.99, AuthorName = "E.B. White", Date = DateTime.Now, Publisher = "HarperCollins" }
                     );
-
+                */
                 context.SaveChanges();
             }
         }

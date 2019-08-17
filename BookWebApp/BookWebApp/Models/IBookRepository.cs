@@ -9,6 +9,9 @@ namespace BookWebApp.Models
     {
         IEnumerable<Book> GetAllBooks();
         Book GetBookById(int bookId);
+        
+        //Method to add book to database
+        void AddBook(Book book);
 
     }
 }
