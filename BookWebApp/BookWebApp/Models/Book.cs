@@ -9,6 +9,7 @@ namespace BookWebApp.Models
     public class Book
     {
         //Key Field for Book table
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -28,12 +29,10 @@ namespace BookWebApp.Models
         public string Publisher { get; set; }
 
         [Required]
+        [Display(Name = "Date Added")]
         public DateTime Date { get; set; }
 
     }
 
-    public enum Publisher
-    {
 
-    }
 }

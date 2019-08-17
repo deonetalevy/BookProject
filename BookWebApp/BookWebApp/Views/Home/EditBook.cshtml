@@ -1,0 +1,62 @@
+﻿@page
+
+@model BookWebApp.ViewModels.HomeViewModel
+
+<h2>Edit Record</h2>
+
+<form asp-action="Index" method="post" class="form-horizontal" role="form">
+
+    <!--Display Validation Error Messages based on model-->
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <!--Form Labels and input boxes for saving a book to the database-->
+    <div class="form-group">
+        <label asp-for="Book.BookName" class="col-md-6 control-label">Book Name</label>
+        <div class="col-md-6">
+            <input asp-for="Book.BookName" class="form-control" />
+            <span asp-validation-for="Book.BookName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Book.AuthorName" class="col-md-6 control-label">Author Name</label>
+        <div class="col-md-6">
+            <input asp-for="Book.AuthorName" class="form-control" />
+            <span asp-validation-for="Book.AuthorName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Book.Price" class="col-md-6 control-label">Price $</label>
+        <div class="col-md-6">
+            <input asp-for="Book.Price" class="form-control" />
+            <span asp-validation-for="Book.Price" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Book.Publisher" class="col-md-6 control-label">Publisher</label>
+        <div class="col-md-6">
+            <select asp-for="Book.Publisher" class="custom-select custom-select-lg">
+                <option selected>Choose a Publisher from this List</option>
+                <option value="Penguin Random House">Penguin Random House</option>
+                <option value="Hachette Livre">Hachette Livre</option>
+                <option value="Springer Nature">Springer Nature</option>
+                <option value="Simon & Schuster">Simon & Schuster</option>
+                <option value="Harper Collins">Harper Collins</option>
+            </select>
+            <span asp-validation-for="Book.Publisher" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+    <!--Button to Update Book Data in the database-->
+    <div class="form-group">
+        <div class="col-md-offset-6 col-md-6">
+            <input type="submit" class="btn btn-primary" value="Update Book Record" />
+        </div>
+    </div>
+
+</form>
