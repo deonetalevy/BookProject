@@ -28,9 +28,16 @@ namespace BookWebApp.Controllers
         [HttpPost]
         public IActionResult Index(Book book)
         {
-            //Perform method to add book to database then redirect to Record Added action method
-            _bookRepository.AddBook(book);
-            return RedirectToAction("RecordAdded");
+            //Only add record if data is valid
+            if (ModelState.IsValid)
+            {
+                //Set Date Time Field for record
+                book.Date = DateTime.Now;
+                //Perform method to add book to database then redirect to Record Added action method
+                _bookRepository.AddBook(book);
+                return RedirectToAction("RecordAdded");
+            }
+            return View(book);
         }
 
         public IActionResult RecordAdded()
