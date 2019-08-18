@@ -12,7 +12,10 @@ namespace BookWebApp.ViewModels
         public List<Book> Books { get; set; }
         public Book Book { get; set; }
 
-        public string BookPublisher { get; set; }
+        //This property holds a publisher
+        public string Publisher { get; set; }
 
+        //This propery holds all available publishers
+        public IEnumerable<SelectListItem> Publishers { get; set; }
     }
 }

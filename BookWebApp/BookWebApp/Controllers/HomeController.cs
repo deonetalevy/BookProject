@@ -29,12 +29,14 @@ namespace BookWebApp.Controllers
             var books = from b in _bookRepository.GetAllBooks()
                         select b;
 
+            //Contruct view model and set book values and publisher dropdown values
+            var publishers = _bookRepository.GetAllPublishers();
+
             HomeViewModel HomeViewmodel = new HomeViewModel
             {
-                Books = books.ToList()
-
+                Books = books.ToList(),
+                Publishers = _bookRepository.SelectList(publishers)
             };
-
 
             return View(HomeViewmodel);
         }
@@ -65,13 +67,16 @@ namespace BookWebApp.Controllers
             var books = from b in _bookRepository.GetAllBooks()
                         select b;
 
+            //Contruct view model and set book values and publisher dropdown values
+            var publishers = _bookRepository.GetAllPublishers();
+
             HomeViewModel HomeViewmodel = new HomeViewModel
             {
-                Books = books.ToList()
-
+                Books = books.ToList(),
+                Publishers = _bookRepository.SelectList(publishers)
             };
 
-
+            
             return View(HomeViewmodel);
         }
 
@@ -101,11 +106,16 @@ namespace BookWebApp.Controllers
                 return RedirectToAction("Index");
             }
             //Return book object to view if it is found in table
+            var publishers = _bookRepository.GetAllPublishers();
+
             HomeViewModel _HomeViewModel = new HomeViewModel
             {
-                Book = book
+                Book = book,
+                Publishers = _bookRepository.SelectList(publishers)
 
             };
+ 
+
             return View(_HomeViewModel);
 
 

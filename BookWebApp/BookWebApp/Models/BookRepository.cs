@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookWebApp.Models
@@ -129,6 +130,38 @@ namespace BookWebApp.Models
             }
             return false;
 
+        }
+
+        //Method to Set list for all genres
+        public IEnumerable<string> GetAllPublishers()
+        {
+            return new List<string>
+            {
+                "Penguin Random House",
+                "Hachette Livre",
+                "Springer Nature",
+                "Simon & Schuster",
+                "Harper Collins",
+            };
+        }
+
+        public IEnumerable<SelectListItem> SelectList(IEnumerable<string> elements)
+        {
+            // Create an empty list to hold result of the operation
+            var selectList = new List<SelectListItem>();
+
+            // This loop will cause mvc to render each item as <option value="Publisher">Publisher</option>
+            //in the dropdown list
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element,
+                    Text = element
+                });
+            }
+
+            return selectList;
         }
     }
 }

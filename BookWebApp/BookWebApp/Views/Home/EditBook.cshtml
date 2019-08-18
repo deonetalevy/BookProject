@@ -46,22 +46,13 @@
                 </div>
             </div>
 
-
-            <div class="form-group">
-                <label asp-for="Book.Publisher" class="col-md-auto control-label">Publisher</label>
-                <div class="col-md-auto">
-                    <select asp-for="Book.Publisher" class="custom-select custom-select-lg">
-                        <option selected>Choose a Publisher from this List</option>
-                        <option value="Penguin Random House">Penguin Random House</option>
-                        <option value="Hachette Livre">Hachette Livre</option>
-                        <option value="Springer Nature">Springer Nature</option>
-                        <option value="Simon & Schuster">Simon & Schuster</option>
-                        <option value="Harper Collins">Harper Collins</option>
-                    </select>
-                    <span asp-validation-for="Book.Publisher" class="text-danger"></span>
-                </div>
+            <div class="form-group col-md-auto">
+                @Html.LabelFor(m => m.Book.Publisher)
+                @Html.DropDownListFor(m => m.Book.Publisher, Model.Publishers,
+                "Choose a Publisher from this List", new { @class = "form-control" })
+                <span asp-validation-for="Book.Publisher" class="text-danger"></span>
             </div>
-
+            
             <div class="form-group">
                 <label asp-for="Book.Date" class="col-md-auto control-label">Date Originally Added</label>
                 <div class="col-md-auto">
