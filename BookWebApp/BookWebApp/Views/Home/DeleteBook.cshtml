@@ -1,0 +1,76 @@
+﻿@model BookWebApp.ViewModels.HomeViewModel
+
+<div>
+
+    <div class="row">
+        <div class="col align-self-center  col-md-auto">
+            <h2>Are you sure you want to delete this Record?</h2>
+        </div>
+    </div>
+
+    <div class="row align-items-start">
+        <form asp-action="DeleteBook" method="post" class="form-horizontal" role="form">
+
+            <!--Form Labels and input boxes for saving a book to the database-->
+            <div class="form-group">
+                <label asp-for="Book.Id" class="col-md-auto control-label">Book Id</label>
+                <div class="col-md-auto">
+                    <input asp-for="Book.Id" class="form-control" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.BookName" class="col-md-auto control-label">Book Name</label>
+                <div class="col-md-auto">
+                    <input asp-for="Book.BookName" class="form-control" readonly>                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.AuthorName" class="col-md-auto control-label">Author Name</label>
+                <div class="col-md-auto">
+                    <input asp-for="Book.AuthorName" class="form-control" readonly>                  
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.Price" class="col-md-auto control-label">Price $</label>
+                <div class="col-md-auto">
+                    <input asp-for="Book.Price" class="form-control" readonly>                   
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Book.Publisher" class="col-md-auto control-label">Publisher</label>
+                <div class="col-md-auto">
+                    <input asp-for="Book.Publisher" class="form-control" readonly>
+                    <span asp-validation-for="Book.Publisher" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.Date" class="col-md-auto control-label">Date Originally Added</label>
+                <div class="col-md-auto">
+                    <input asp-for="Book.Date" class="form-control" readonly>
+                </div>
+            </div>
+
+
+
+            <!--Button to Update Book Data in the database-->
+            <div class="form-group">
+                <div class="col-md-offset-6 col-md-auto">
+                    <input type="submit" class="btn btn-primary" value="Delete Book Record" />
+                </div>
+                <div class="col-md-offset-6 col-md-auto">
+                    <a asp-action="Index">Back to List</a>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+

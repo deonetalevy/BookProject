@@ -135,6 +135,37 @@ namespace BookWebApp.Controllers
             return View(book);
         }
 
+        //GET: Book/Edit
+        public IActionResult DeleteBook(int? id)
+        {
+            if (id is null)
+            {
+                return RedirectToAction("Index");
+            }
+            //Get Book with matching Id
+            var book = _bookRepository.GetAllBooks().ToList().Where(s => s.Id == id).FirstOrDefault();
+
+            //Redirect to index page if book isn't found
+            if (book == null)
+            {
+                return RedirectToAction("Index");
+            }
+            //Return book object to view if it is found in table
+            HomeViewModel _HomeViewModel = new HomeViewModel
+            {
+                Book = book
+
+            };
+            return View(_HomeViewModel);
+
+
+        }
+
+        public IActionResult RecordUpdated()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
