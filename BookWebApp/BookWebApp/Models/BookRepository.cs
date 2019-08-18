@@ -33,7 +33,10 @@ namespace BookWebApp.Models
         //Method to Add Book to database
         public Boolean AddBook(Book book)
         {
+            
+            
             String _bookName = book.BookName;
+            
             //Check Books table for an existing duplicate Book Name using LINQ query before adding record to table
             bool dupeName = _appDbContext.Books.AsEnumerable()
                 .Any(row => row.BookName == _bookName);
@@ -52,6 +55,8 @@ namespace BookWebApp.Models
 
                 return true;    
             }
+
+            
         }
 
         //Method to Update Book Record in database
@@ -59,10 +64,31 @@ namespace BookWebApp.Models
         {
 
             //Update record in table and return true             
-            String _bookName = book.BookName;
+            //Turn off Tracking and Use logic to allow record to be updated when the Book Name isn't changing             
+            _appDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            if (book.BookName == _appDbContext.Books.Where(x => x.Id == book.Id).SingleOrDefault().BookName)
+            {
+                //Update record in table and return true
+                if (book != null)
+                {
+                    
+                    //Set date and update record
+                    book.Date = DateTime.Now;
+                    _appDbContext.Entry(book).State = EntityState.Modified;
+                    _appDbContext.SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            { 
             //Check Books table for an existing duplicate Book Name using LINQ query before updating record
             bool dupeName = _appDbContext.Books.AsEnumerable()
-                .Any(row => row.BookName == _bookName);
+                .Any(row => row.BookName == book.BookName);
 
             //If duplicate records are found, return false
             if (dupeName == true)
@@ -82,6 +108,7 @@ namespace BookWebApp.Models
                 {
                     return false;
                 }
+            }
             }
 
         }
