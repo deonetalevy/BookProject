@@ -59,16 +59,31 @@ namespace BookWebApp.Models
         {
 
             //Update record in table and return true             
-            if (book != null)
-            {
-                book.Date = DateTime.Now;
-                _appDbContext.Entry(book).State = EntityState.Modified;
-                _appDbContext.SaveChanges();
+            String _bookName = book.BookName;
+            //Check Books table for an existing duplicate Book Name using LINQ query before updating record
+            bool dupeName = _appDbContext.Books.AsEnumerable()
+                .Any(row => row.BookName == _bookName);
 
-                return true;
+            //If duplicate records are found, return false
+            if (dupeName == true)
+            {
+                return false;
             }
-            return false;
-            
+            else
+            {
+                if (book != null)
+                {
+                    book.Date = DateTime.Now;
+                    _appDbContext.Entry(book).State = EntityState.Modified;
+                    _appDbContext.SaveChanges();
+
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            }
+
         }
 
         //Method to delete book record from table
