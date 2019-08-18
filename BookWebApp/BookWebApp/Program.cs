@@ -21,6 +21,7 @@ namespace BookWebApp
             //Use dependency injection to get appcontext and seed the database
             var host = CreateWebHostBuilder(args).Build();
 
+            /*
             using (var scope = host.Services.CreateScope()) //Dependency injection container
             {
                 var services = scope.ServiceProvider;
@@ -28,13 +29,14 @@ namespace BookWebApp
                 {
                     var context = services.GetRequiredService<AppDbContext>();
                     DbInitializer.Seed(context);
-                    
+
                 }
                 catch (Exception)
                 {
                     //Initialization failed
                 }
             }
+            */
 
             host.Run();
 

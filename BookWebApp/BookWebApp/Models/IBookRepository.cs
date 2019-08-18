@@ -9,7 +9,7 @@ namespace BookWebApp.Models
     {
         IEnumerable<Book> GetAllBooks();
 
-        
+
         //Method to add book to database
         Boolean AddBook(Book book);
 

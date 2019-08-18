@@ -16,7 +16,7 @@ namespace BookWebApp
 {
     public class Startup
     {
-             
+
         //Pass in configuration from Appsettings.json file
         public IConfiguration Configuration { get; }
 
@@ -58,7 +58,7 @@ namespace BookWebApp
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles(); 
+            app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseStatusCodePages(); //Will show status information if returned
 

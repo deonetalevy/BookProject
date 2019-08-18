@@ -33,10 +33,10 @@ namespace BookWebApp.Models
         //Method to Add Book to database
         public Boolean AddBook(Book book)
         {
-            
-            
+
+
             String _bookName = book.BookName;
-            
+
             //Check Books table for an existing duplicate Book Name using LINQ query before adding record to table
             bool dupeName = _appDbContext.Books.AsEnumerable()
                 .Any(row => row.BookName == _bookName);
@@ -53,10 +53,10 @@ namespace BookWebApp.Models
                 _appDbContext.Books.Add(book);
                 _appDbContext.SaveChanges();
 
-                return true;    
+                return true;
             }
 
-            
+
         }
 
         //Method to Update Book Record in database
@@ -71,7 +71,7 @@ namespace BookWebApp.Models
                 //Update record in table and return true
                 if (book != null)
                 {
-                    
+
                     //Set date and update record
                     book.Date = DateTime.Now;
                     _appDbContext.Entry(book).State = EntityState.Modified;
@@ -85,30 +85,31 @@ namespace BookWebApp.Models
                 }
             }
             else
-            { 
-            //Check Books table for an existing duplicate Book Name using LINQ query before updating record
-            bool dupeName = _appDbContext.Books.AsEnumerable()
-                .Any(row => row.BookName == book.BookName);
-
-            //If duplicate records are found, return false
-            if (dupeName == true)
             {
-                return false;
-            }
-            else
-            {
-                if (book != null)
-                {
-                    book.Date = DateTime.Now;
-                    _appDbContext.Entry(book).State = EntityState.Modified;
-                    _appDbContext.SaveChanges();
+                //Check Books table for an existing duplicate Book Name using LINQ query before updating record
+                bool dupeName = _appDbContext.Books.AsEnumerable()
+                    .Any(row => row.BookName == book.BookName);
 
-                    return true;
-                } else
+                //If duplicate records are found, return false
+                if (dupeName == true)
                 {
                     return false;
                 }
-            }
+                else
+                {
+                    if (book != null)
+                    {
+                        book.Date = DateTime.Now;
+                        _appDbContext.Entry(book).State = EntityState.Modified;
+                        _appDbContext.SaveChanges();
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
 
         }
