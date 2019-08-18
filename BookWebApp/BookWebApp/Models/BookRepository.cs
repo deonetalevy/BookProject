@@ -58,8 +58,7 @@ namespace BookWebApp.Models
         public Boolean UpdateBook(Book book)
         {
 
-            //Add record to table and return true if no duplicate records are found
-            //book.Date = DateTime.Now;
+            //Update record in table and return true             
             if (book != null)
             {
                 book.Date = DateTime.Now;
@@ -70,6 +69,23 @@ namespace BookWebApp.Models
             }
             return false;
             
+        }
+
+        //Method to delete book record from table
+        public Boolean DeleteBook(Book book)
+        {
+
+            //Delete record from table
+            if (book != null)
+            {
+
+                _appDbContext.Remove(book);
+                _appDbContext.SaveChanges();
+
+                return true;
+            }
+            return false;
+
         }
     }
 }

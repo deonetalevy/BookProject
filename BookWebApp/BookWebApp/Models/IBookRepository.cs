@@ -16,5 +16,8 @@ namespace BookWebApp.Models
         //Method to update book record in database
         Boolean UpdateBook(Book book);
 
+        //Method to delete book record from database
+        Boolean DeleteBook(Book book);
+
     }
 }

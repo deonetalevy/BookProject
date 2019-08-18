@@ -124,7 +124,7 @@ namespace BookWebApp.Controllers
                 if (result == true)
                 {
 
-                    return RedirectToAction("RecordAdded");
+                    return RedirectToAction("RecordUpdated");
                 }
                 else
                 {
@@ -135,7 +135,13 @@ namespace BookWebApp.Controllers
             return View(book);
         }
 
-        //GET: Book/Edit
+        //Display this view when record is updated
+        public IActionResult RecordUpdated()
+        {
+            return View();
+        }
+
+        //GET: Book/DeleteBook
         public IActionResult DeleteBook(int? id)
         {
             if (id is null)
@@ -161,7 +167,33 @@ namespace BookWebApp.Controllers
 
         }
 
-        public IActionResult RecordUpdated()
+        //POST: Books/Edit
+        [HttpPost]
+        public IActionResult DeleteBook(Book book)
+        {
+            //[Bind(include: "Id,BookName,AuthorName,Price,Publisher,Date")] 
+            //Only update record if data is valid
+            if (ModelState.IsValid)
+            {
+                //Perform method to add book to database then redirect to Record Added action method
+                var result = _bookRepository.DeleteBook(book);
+
+                if (result == true)
+                {
+
+                    return RedirectToAction("RecordDeleted");
+                }
+                else
+                {
+                    return RedirectToAction("AddFail");
+                }
+
+            }
+            return View(book);
+        }
+
+        //Display this view when record is deleted
+        public IActionResult RecordDeleted()
         {
             return View();
         }
