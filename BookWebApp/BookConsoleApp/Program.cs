@@ -12,23 +12,54 @@ namespace BookConsoleApp
         static void Main()
         {
 
-            //Directory path variable
-            string dirPath;
+            //Directory path variable. Default to "c:\\" to avoid build error
+            string dirPath = "c:";
 
             Boolean validPath = false;
+            //Try to write message
+            try
+            {
+                Console.WriteLine("Enter a Valid File Path");
+            }
+            catch (IOException)
+            {
+                return;
+            }
 
-            Console.WriteLine("Enter a Valid File Path");
-            dirPath = @"" + Console.ReadLine();
+            //Try to read in file name
+            try
+            {
+                dirPath = @"" + Console.ReadLine();
+            }
+            catch (IOException)
+            {
+                return;
+            }
+            catch (OutOfMemoryException)
+            {
+                return;
+            }
 
             //Get File Path from user input
             //Execute While statement until valid path is entered
             while (validPath == false)
             {
-                
+
                 //Check if Directory exists. If it does, set the path
                 if (Directory.Exists(dirPath))
                 {
-                    var path = new DirectoryInfo(dirPath);
+                    try
+                    {
+                        var path = new DirectoryInfo(dirPath);
+                    }
+                    catch (System.Security.SecurityException)
+                    {
+                        return;
+                    }
+                    catch (PathTooLongException)
+                    {
+                        return;
+                    }
                     // var files = path.GetFiles();
 
                     //Exit while statement by meeting condition
@@ -36,10 +67,30 @@ namespace BookConsoleApp
                 }
                 else
                 {
-                    //Prompt user to enter a valid file path
-                    Console.WriteLine("{0} is not a valid File Path", dirPath);
-                    Console.WriteLine("Enter a Valid File Path");
-                    dirPath = @"" + Console.ReadLine();
+                    try
+                    {
+                        //Prompt user to enter a valid file path
+                        Console.WriteLine("{0} is not a valid File Path." +
+                            " Enter a Valid File Path", dirPath);
+                    }
+                    catch (IOException)
+                    {
+                        return;
+                    }
+
+                    //Try do read in directory to dirPath variable
+                    try
+                    {
+                        dirPath = @"" + Console.ReadLine();
+                    }
+                    catch (IOException)
+                    {
+                        return;
+                    }
+                    catch (OutOfMemoryException)
+                    {
+                        return;
+                    }
                 }
 
             }
@@ -47,10 +98,18 @@ namespace BookConsoleApp
             //Get Book data from database, then write file
             using (var db = new BookProjectContext())
             {
+                //Try to write notification message to screen
+                try
+                {
+                    Console.WriteLine("Books will be separated into individual text files " +
+                        "based on the Publisher." + Environment.NewLine +
+                        "Finding Unique Publishers in database...");
+                }
+                catch (IOException)
+                {
+                    return;
+                }
 
-                Console.WriteLine("Books will be separated into individual text files " +
-                    "based on the Publisher.");
-                Console.WriteLine("Finding Unique Publishers in database...");
 
                 //Find unique publishers in database and save to list
                 var publishers = db.Books.Where(j => j.Id == j.Id)
@@ -59,35 +118,45 @@ namespace BookConsoleApp
                 //Write books belonging to each publisher in the list to a text file
                 foreach (var pub in publishers)
                 {
-                    Console.WriteLine("{0}", pub);
+
                     //Set: File name set to Publisher Name
                     var filename = pub + " Books.txt";
+                    StreamWriter tw;
 
                     //Create: TextWriter object for writing to file
-                    var tw = new StreamWriter(Path.Combine(dirPath, filename));
+#pragma warning disable UnhandledExceptions // Unhandled exception(s)
+                    tw = new StreamWriter(Path.Combine(dirPath, filename));
+#pragma warning restore UnhandledExceptions // Unhandled exception(s)
+
+
 
                     //Get: A list of all books from database that have the current publisher name
                     var _books = db.Books.Where(j => j.Publisher == pub).ToList();
 
-                    //Write each record to the file using loop
-                    foreach (var record in _books)
+                    if (tw is null)
                     {
-                        var line = record.BookName + " | " + record.AuthorName + " | " + record.Price;
-                        tw.WriteLine(line);
+                        //Write each record to the file using loop
+                        foreach (var record in _books)
+                        {
+                            var line = record.BookName + " | " + record.AuthorName + " | " + record.Price;
+                            tw.WriteLine(line);
+                        }
                     }
-
                     //Close streamwriter object
                     tw.Close();
 
                 }
 
-                Console.WriteLine("{0} files successfully created.", publishers.Count);
-
+                //Try to write message to screen
+                try
+                {
+                    Console.WriteLine("{0} files successfully created.", publishers.Count);
+                }
+                catch (IOException)
+                {
+                    return;
+                }
             }
-
-
-
-
         }
     }
 }

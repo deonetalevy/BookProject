@@ -23,18 +23,9 @@ namespace BookWebApp.Models
             return _appDbContext.Books; //Checks if Book is already populated. If not, it retrieves the data from the Books table in the database
         }
 
-        //Method to Get book by Id
-        /*
-        public Book GetBookById(int bookId)
-        {
-            return _appDbContext.Books.FirstOrDefault(b => b.Id == bookId);
-        }
-        */
-
         //Method to Add Book to database
         public Boolean AddBook(Book book)
         {
-
 
             String _bookName = book.BookName;
 
@@ -52,7 +43,13 @@ namespace BookWebApp.Models
                 //Add record to table and return true if no duplicate records are found
                 book.Date = DateTime.Now;
                 _appDbContext.Books.Add(book);
-                _appDbContext.SaveChanges();
+                try
+                {
+                    _appDbContext.SaveChanges();
+                }
+                catch (DbUpdateException)
+                {
+                }
 
                 return true;
             }
@@ -67,42 +64,25 @@ namespace BookWebApp.Models
             //Update record in table and return true             
             //Turn off Tracking and Use logic to allow record to be updated when the Book Name isn't changing             
             _appDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            if (book.BookName == _appDbContext.Books.Where(x => x.Id == book.Id).SingleOrDefault().BookName)
+            try
             {
-                //Update record in table and return true
-                if (book != null)
+                if (book.BookName == _appDbContext.Books.Where(x => x.Id == book.Id).SingleOrDefault().BookName)
                 {
-
-                    //Set date and update record
-                    book.Date = DateTime.Now;
-                    _appDbContext.Entry(book).State = EntityState.Modified;
-                    _appDbContext.SaveChanges();
-
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                //Check Books table for an existing duplicate Book Name using LINQ query before updating record
-                bool dupeName = _appDbContext.Books.AsEnumerable()
-                    .Any(row => row.BookName == book.BookName);
-
-                //If duplicate records are found, return false
-                if (dupeName == true)
-                {
-                    return false;
-                }
-                else
-                {
+                    //Update record in table and return true
                     if (book != null)
                     {
+
+                        //Set date and try update record
                         book.Date = DateTime.Now;
                         _appDbContext.Entry(book).State = EntityState.Modified;
-                        _appDbContext.SaveChanges();
+                        try
+                        {
+                            _appDbContext.SaveChanges();
+                        }
+                        catch (DbUpdateException)
+                        {
+                            return false;
+                        }
 
                         return true;
                     }
@@ -111,6 +91,43 @@ namespace BookWebApp.Models
                         return false;
                     }
                 }
+                else
+                {
+                    //Check Books table for an existing duplicate Book Name using LINQ query before updating record
+                    bool dupeName = _appDbContext.Books.AsEnumerable()
+                        .Any(row => row.BookName == book.BookName);
+
+                    //If duplicate book name is found, return false
+                    if (dupeName == true)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        //If book name is unique and book object isn't empty,
+                        //attempt to update record
+                        if (book != null)
+                        {
+                            book.Date = DateTime.Now;
+                            _appDbContext.Entry(book).State = EntityState.Modified;
+                            _appDbContext.SaveChanges();
+
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
             }
 
         }
@@ -122,9 +139,16 @@ namespace BookWebApp.Models
             //Delete record from table
             if (book != null)
             {
-
+                
                 _appDbContext.Remove(book);
-                _appDbContext.SaveChanges();
+                try
+                {
+                    _appDbContext.SaveChanges();
+                }
+                catch (DbUpdateException)
+                {
+                    return false;
+                }
 
                 return true;
             }

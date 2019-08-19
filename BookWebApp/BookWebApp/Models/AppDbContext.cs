@@ -8,7 +8,8 @@ namespace BookWebApp.Models
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) //Pass in dbcontextoptions through constructor to the base type
+        //Pass in dbcontextoptions through constructor to the base type
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }

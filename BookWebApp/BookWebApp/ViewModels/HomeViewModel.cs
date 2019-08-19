@@ -9,7 +9,10 @@ namespace BookWebApp.ViewModels
 {
     public class HomeViewModel
     {
+        //List of books
         public List<Book> Books { get; set; }
+
+        //Book Object
         public Book Book { get; set; }
 
         //This property holds a publisher

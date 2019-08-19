@@ -25,7 +25,7 @@ namespace BookWebApp.Controllers
         public IActionResult Index()
         {
 
-            //Use LINQ to get Books
+            //Get Books
             var books = from b in _bookRepository.GetAllBooks()
                         select b;
 
@@ -52,12 +52,14 @@ namespace BookWebApp.Controllers
                 //Perform method to add book to database then redirect to Record Added action method
                 var result = _bookRepository.AddBook(model.Book);
 
-                if (result == true) {
+                if (result == true)
+                {
 
                     return RedirectToAction("RecordAdded");
                 }
-                else {
-                    return RedirectToAction("AddFail");
+                else
+                {
+                    return RedirectToAction("DupeBook");
                 }
 
             }
@@ -76,16 +78,24 @@ namespace BookWebApp.Controllers
                 Publishers = _bookRepository.SelectList(publishers)
             };
 
-            
+
             return View(HomeViewmodel);
         }
 
+        //Get: View when Record is successfully added
         public IActionResult RecordAdded()
         {
             return View();
         }
 
+        //Get: View when an action fails
         public IActionResult AddFail()
+        {
+            return View();
+        }
+
+        //Get: View when a duplicate book is entered 
+        public IActionResult DupeBook()
         {
             return View();
         }
@@ -93,6 +103,7 @@ namespace BookWebApp.Controllers
         //GET: Book/Edit
         public IActionResult EditBook(int? id)
         {
+            //If no id is passed return to the Index page
             if (id is null)
             {
                 return RedirectToAction("Index");
@@ -114,7 +125,7 @@ namespace BookWebApp.Controllers
                 Publishers = _bookRepository.SelectList(publishers)
 
             };
- 
+
 
             return View(_HomeViewModel);
 
@@ -134,7 +145,7 @@ namespace BookWebApp.Controllers
                 if (result == true)
                 {
 
-                    return RedirectToAction("RecordUpdated");
+                    return RedirectToAction("DupeBook");
                 }
                 else
                 {
@@ -185,9 +196,10 @@ namespace BookWebApp.Controllers
             //Only update record if data is valid
             if (ModelState.IsValid)
             {
-                //Perform method to add book to database then redirect to Record Added action method
+                //Perform method to add book to database then redirect to action method
                 var result = _bookRepository.DeleteBook(book);
 
+                //If delete is successful, redirect to the Deleted Record views
                 if (result == true)
                 {
 
