@@ -145,7 +145,7 @@ namespace BookWebApp.Controllers
                 if (result == true)
                 {
 
-                    return RedirectToAction("DupeBook");
+                    return RedirectToAction("RecordUpdated");
                 }
                 else
                 {
@@ -153,7 +153,18 @@ namespace BookWebApp.Controllers
                 }
 
             }
-            return View(book);
+            //Return book object to view if it is found in table
+            var publishers = _bookRepository.GetAllPublishers();
+
+            HomeViewModel _HomeViewModel = new HomeViewModel
+            {
+                Book = book,
+                Publishers = _bookRepository.SelectList(publishers)
+
+            };
+
+
+            return View(_HomeViewModel);
         }
 
         //Display this view when record is updated

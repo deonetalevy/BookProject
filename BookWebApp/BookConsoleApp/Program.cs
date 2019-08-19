@@ -133,7 +133,7 @@ namespace BookConsoleApp
                     //Get: A list of all books from database that have the current publisher name
                     var _books = db.Books.Where(j => j.Publisher == pub).ToList();
 
-                    if (tw is null)
+                    if (tw is null == false)
                     {
                         //Write each record to the file using loop
                         foreach (var record in _books)

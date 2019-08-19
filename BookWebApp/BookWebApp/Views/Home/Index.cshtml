@@ -8,10 +8,8 @@
     </div>
 
     <div class="row align-items-start">
-        <form asp-action="Index" method="post" class="form-horizontal" role="form">
+        <form asp-action="Index" method="post" class="form-row" role="form">
 
-            <!--Display Validation Error Messages based on model-->
-            <div asp-validation-summary="All" class="text-danger"></div>
 
             <!--Form Labels and input boxes for saving a book to the database-->
             <div class="form-group">
@@ -47,7 +45,7 @@
             </div>
 
             <!--Button to Save Book Data entered to the database-->
-            <div class="form-group">
+            <div class="form-group col-md-auto">
                 <div class="col-md-offset-6 col-md-auto">
                     <input type="submit" class="btn btn-primary" value="Save Book" />
                 </div>
@@ -67,19 +65,19 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => Model.Book.BookName)
+                        Book Title
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => Model.Book.AuthorName)
+                        Author
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => Model.Book.Publisher)
+                        Publisher
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => Model.Book.Price)
+                        Price $
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => Model.Book.Date)
+                        Date Last Modified
                     </th>
                     <th></th>
                 </tr>
