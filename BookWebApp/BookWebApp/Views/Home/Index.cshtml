@@ -1,119 +1,124 @@
 ﻿@model BookWebApp.ViewModels.HomeViewModel
 
-<div>
-    <div class="row">
-        <div class="col align-self-center">
-            <h2>Add a New Record</h2>
+    <div>
+        <div class="row">
+            <div class="col align-self-center">
+                <h2>Add a New Record</h2>
+            </div>
         </div>
-    </div>
 
-    <div class="row align-items-start">
-        <form asp-action="Index" method="post" class="form-row" role="form">
+        <div class="row align-items-center">
+            <form asp-action="Index" method="post" class="form-row" role="form">
 
 
-            <!--Form Labels and input boxes for saving a book to the database-->
-            <div class="form-group">
-                <label asp-for="Book.BookName" class="col-md-auto control-label">Book Name</label>
-                <div class="col-md-auto">
-                    <input asp-for="Book.BookName" class="form-control" />
-                    <span asp-validation-for="Book.BookName" class="text-danger"></span>
+                <!--Form Labels and input boxes for saving a book to the database-->
+                <div class="form-group">
+                    <label asp-for="Book.BookName" class="col-md-auto control-label">Book Name</label>
+                    <div class="col-md-auto">
+                        <input asp-for="Book.BookName" class="form-control" />
+                        <span asp-validation-for="Book.BookName" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label asp-for="Book.AuthorName" class="col-md-auto control-label">Author Name</label>
-                <div class="col-md-auto">
-                    <input asp-for="Book.AuthorName" class="form-control" />
-                    <span asp-validation-for="Book.AuthorName" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="Book.AuthorName" class="col-md-auto control-label">Author Name</label>
+                    <div class="col-md-auto">
+                        <input asp-for="Book.AuthorName" class="form-control" />
+                        <span asp-validation-for="Book.AuthorName" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label asp-for="Book.Price" class="col-md-auto control-label">Price $</label>
-                <div class="col-md-auto">
-                    <input asp-for="Book.Price" class="form-control" />
-                    <span asp-validation-for="Book.Price" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="Book.Price" class="col-md-auto control-label">Price $</label>
+                    <div class="col-md-auto">
+                        <input asp-for="Book.Price" class="form-control" />
+                        <span asp-validation-for="Book.Price" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="form-group col-md-auto">
-                @Html.LabelFor(m => m.Book.Publisher)
-                @Html.DropDownListFor(m => m.Book.Publisher, Model.Publishers,
-                "Choose a Publisher from this List", new { @class = "form-control" })
-                <span asp-validation-for="Book.Publisher" class="text-danger"></span>
-            </div>
-
-            <!--Button to Save Book Data entered to the database-->
-            <div class="form-group col-md-auto">
-                <div class="col-md-offset-6 col-md-auto">
-                    <input type="submit" class="btn btn-primary" value="Save Book" />
+                <div class="form-group col-md-auto">
+                    @Html.LabelFor(m => m.Book.Publisher)
+                    @Html.DropDownListFor(m => m.Book.Publisher, Model.Publishers,
+                    "Choose a Publisher from this List", new { @class = "form-control" })
+                    <span asp-validation-for="Book.Publisher" class="text-danger"></span>
                 </div>
-            </div>
 
-        </form>
-    </div>
+                <!--Button to Save Book Data entered to the database-->
+                <div class="row form-group">
+                    <label class="col-md-auto control-label"></label>
+                    <label class="col-md-auto control-label"></label>
+                    <label class="col-md-auto control-label"></label>
+                    <div class="form-group col-lg-12 btn-lg align-bottom">
+                        <input type="submit" class="btn btn-primary" value="Save Book" />
+                    </div>
+                </div>
 
-    <div class="row">
-        <div class="col align-self-center">
-            <h2>Books</h2>
+            </form>
         </div>
-    </div>
-
-    <div class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Book Title
-                    </th>
-                    <th>
-                        Author
-                    </th>
-                    <th>
-                        Publisher
-                    </th>
-                    <th>
-                        Price $
-                    </th>
-                    <th>
-                        Date Last Modified
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Books != null)
-                {
 
 
-                    @foreach (var item in Model.Books)
+
+        <div class="row">
+            <div class="col align-self-center">
+                <h2>Books</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Book Title
+                        </th>
+                        <th>
+                            Author
+                        </th>
+                        <th>
+                            Publisher
+                        </th>
+                        <th>
+                            Price $
+                        </th>
+                        <th>
+                            Date Last Modified
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Books != null)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(model => item.BookName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.AuthorName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Publisher)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Price)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Date)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "EditBook", new { id = item.Id })
-                                @Html.ActionLink("Delete", "DeleteBook", new { id = item.Id })
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
 
-</div>
+
+                        @foreach (var item in Model.Books)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => item.BookName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.AuthorName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Publisher)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Date)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "EditBook", new { id = item.Id })
+                                    @Html.ActionLink("Delete", "DeleteBook", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
