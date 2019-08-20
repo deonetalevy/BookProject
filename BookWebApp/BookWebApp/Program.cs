@@ -16,7 +16,7 @@ namespace BookWebApp
     {
         public static void Main(string[] args)
         {
-            //CreateWebHostBuilder(args).Build().Run();
+        
 
             //Use dependency injection to get appcontext and seed the database
             var host = CreateWebHostBuilder(args).Build();

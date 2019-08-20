@@ -14,13 +14,13 @@ namespace BookWebApp.Models
 
         [Required(ErrorMessage ="Book Name is required")]
         [StringLength(100, ErrorMessage = "Book Name is required")]
-		[RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Letters and Numbers Only.")]
-		public string BookName { get; set; }
+        [DataType(DataType.Text, ErrorMessage = "Text Only")]
+        public string BookName { get; set; }
 
         [Required(ErrorMessage = "Author Name is required")]
         [StringLength(100, ErrorMessage = "Author Name is required")]
-		[RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Letters and Numbers Only.")]
-		public string AuthorName { get; set; }
+        [DataType(DataType.Text, ErrorMessage = "Text Only")]
+        public string AuthorName { get; set; }
 
         [Required(ErrorMessage = "Price must be entered")]
 		[Range(.01, 10000, ErrorMessage ="Price must be positive. Max price is $10000")]
