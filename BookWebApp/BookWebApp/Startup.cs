@@ -61,6 +61,7 @@ namespace BookWebApp
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseStatusCodePages(); //Will show status information if returned
+			app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

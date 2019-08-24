@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookWebApp.Models
 {
-    public class AppDbContext : DbContext
+	public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         //Pass in dbcontextoptions through constructor to the base type
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
